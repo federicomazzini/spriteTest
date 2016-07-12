@@ -11,16 +11,14 @@ import SpriteKit
 
 class GameViewController: UIViewController {
 
+    @IBOutlet weak var imageView: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let scene = GameScene(size: view.bounds.size)
-        let skView = view as! SKView
-        skView.showsFPS = true
-        skView.showsNodeCount = true
-        skView.ignoresSiblingOrder = true
-        scene.scaleMode = .ResizeFill
-        skView.presentScene(scene)
+        imageView.image = NoiseGenerator.sharedInstance.generateNoiseImage(self.view.frame.size)
+        imageView.contentMode = UIViewContentMode.ScaleAspectFit
+        imageView.layer.magnificationFilter = kCAFilterNearest
     }
     
     override func prefersStatusBarHidden() -> Bool {

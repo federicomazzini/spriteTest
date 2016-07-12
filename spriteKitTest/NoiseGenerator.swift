@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 infix operator ** { }
 func ** (radix: Int, power: Int) -> Int {
@@ -16,6 +17,65 @@ func ** (radix: Int, power: Int) -> Int {
 class NoiseGenerator {
     
     static let sharedInstance = NoiseGenerator()
+    
+    private let rgbColorSpace = CGColorSpaceCreateDeviceRGB()
+    private let bitmapInfo:CGBitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedFirst.rawValue)
+    
+    private let ARC4RANDOM_MAX = 0x100000000
+    
+    //MARK: Image generation
+    
+    struct PixelData {
+        var a:UInt8 = 255
+        var r:UInt8
+        var g:UInt8
+        var b:UInt8
+    }
+    
+    func imageFromARGB32Bitmap(pixels:[PixelData], width:Int, height:Int)->UIImage {
+        let bitsPerComponent:Int = 8
+        let bitsPerPixel:Int = 32
+        
+        var data = pixels // Copy to mutable []
+        let providerRef = CGDataProviderCreateWithCFData(NSData(bytes: &data, length: data.count * sizeof(PixelData)))
+        
+        let cgim = CGImageCreate(width, height, bitsPerComponent, bitsPerPixel, width * Int(sizeof(PixelData)), rgbColorSpace,	bitmapInfo, providerRef, nil, true, CGColorRenderingIntent.RenderingIntentDefault)
+        
+        return UIImage(CGImage: cgim!);
+    }
+    
+    func generateNoiseImage(size:CGSize) -> UIImage {
+        
+        let width = Int(size.width / 6)
+        let height = Int(size.height / 6)
+        
+        let whiteNoise : [[Double]] = NoiseGenerator.sharedInstance.generateWhiteNoise(width, height: height)
+        let perlinNoise : [[Double]] = NoiseGenerator.sharedInstance.GeneratePerlinNoise(whiteNoise, octaveCount: 8)
+        
+        var pixelArray = [PixelData](count: width * height, repeatedValue: PixelData(a: 255, r:0, g: 0, b: 0))
+        
+        for i in 0 ..< (height - 1) {
+            for j in 0 ..< (width - 1) {
+                var val = abs(Float(perlinNoise[j][i]))
+                
+                if val > 1 {
+                    val = 1
+                }
+                
+                let index = i * width + j
+                let u_I = UInt8(val * 255)
+                pixelArray[index].r = u_I
+                pixelArray[index].g = u_I
+                pixelArray[index].b = u_I
+            }
+        }
+        
+        let outputImage = imageFromARGB32Bitmap(pixelArray, width: width, height: height)
+        
+        return outputImage
+    }
+    
+    //MARK: Noise generation
     
     func Interpolate(xCero: Double, xOne: Double, alpha: Double) -> Double {
         return xCero * (1 - alpha) + alpha * xOne
@@ -28,8 +88,10 @@ class NoiseGenerator {
         for _ in 1...width {
             var h = [Double]()
             for _ in 1...height {
-                let r = drand48()
-                h.append(r)
+//                let r = drand48()
+                let r = Double(arc4random()) / Double(ARC4RANDOM_MAX)
+                
+                h.append(Double(r))
             }
             tda.append(h)
         }
@@ -39,22 +101,23 @@ class NoiseGenerator {
     
     func generateSmoothNoise(baseNoise: [[Double]], octave: Int) -> [[Double]] {
     
-        let width  = baseNoise.count
-        let height = baseNoise[0].count
+        let width  = baseNoise.count - 1
+        let height = baseNoise[0].count - 1
         
         var smoothNoise = [[Double]]()
         
         let samplePeriod    : Int    = 2 ** octave
         let sampleFrequency : Double = 1.0 / Double(samplePeriod)
         
-        for indexW in 1...width {
+        for indexW in 0...width {
     
             //calculate the horizontal sampling indices
             let sample_i0 : Int = Int(floor(Double(indexW) / Double(samplePeriod))) * samplePeriod
             let sample_i1 : Int = (sample_i0 + samplePeriod) % width
             let horizontal_blend : Double = (Double(indexW) - Double(sample_i0)) * sampleFrequency
             
-            for indexH in 1...height {
+            smoothNoise.append([Double]())
+            for indexH in 0...height {
     
                 //calculate the vertical sampling indices
                 let sample_j0 = Int(floor(Double(indexH) / Double(samplePeriod))) * samplePeriod
@@ -72,7 +135,7 @@ class NoiseGenerator {
                                                   alpha: horizontal_blend)
                 
                 //final blend
-                smoothNoise[indexW][indexH] = Interpolate(top, xOne: bottom, alpha: vertical_blend)
+                smoothNoise[indexW].append(Interpolate(top, xOne: bottom, alpha: vertical_blend))
             }
         }
         
@@ -88,29 +151,31 @@ class NoiseGenerator {
         let persistance = 0.5
         
         //generate smooth noise
-        for index in 1...octaveCount {
-            smoothNoise[index] = generateSmoothNoise(baseNoise, octave: index)
+        for index in 0...octaveCount - 1 {
+            smoothNoise.append(generateSmoothNoise(baseNoise, octave: index))
         }
         
-        var perlinNoise    = [[Double]]()
+        var perlinNoise = generateWhiteNoise(width, height: height)
+        
         let amplitude      = 1.0
         var totalAmplitude = 0.0
         
         //blend noise together
-        for indexO in octaveCount...1 {
+        for octave in (octaveCount - 1).stride(to: 0, by: -1) {
             let amplitude = amplitude * persistance
             totalAmplitude = amplitude + totalAmplitude
             
-            for indexW in 1...width {
-                for indexH in 1...height {
-                    perlinNoise[indexW][indexH] = perlinNoise[indexW][indexH] + smoothNoise[indexO][indexW][indexH] * amplitude
+            for indexW in 0...width - 1 {
+                
+                for indexH in 0...height - 1 {
+                    perlinNoise[indexW][indexH] = (perlinNoise[indexW][indexH] + smoothNoise[octave][indexW][indexH] * amplitude)
                 }
             }
         }
         
         //normalisation
-        for indexW in 1...width {
-            for indexH in 1...height {
+        for indexW in 0...width - 1 {
+            for indexH in 0...height - 1 {
                 perlinNoise[indexW][indexH] = perlinNoise[indexW][indexH] / totalAmplitude
             }
         }

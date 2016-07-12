@@ -16,8 +16,22 @@
                     <view key="view" contentMode="scaleToFill" id="auS-yo-WoA" customClass="SKView">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ge7-Q2-KQl">
+                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="ge7-Q2-KQl" secondAttribute="trailing" id="4fW-wl-EFK"/>
+                            <constraint firstItem="znt-TG-0Pf" firstAttribute="top" secondItem="ge7-Q2-KQl" secondAttribute="bottom" id="9Wv-9Z-lVY"/>
+                            <constraint firstItem="ge7-Q2-KQl" firstAttribute="top" secondItem="DV3-Jb-G0X" secondAttribute="bottom" id="jUa-mE-Wgw"/>
+                            <constraint firstItem="ge7-Q2-KQl" firstAttribute="leading" secondItem="auS-yo-WoA" secondAttribute="leading" id="ziT-xS-Yfk"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="imageView" destination="ge7-Q2-KQl" id="T01-jH-X8V"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kok-87-WXr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

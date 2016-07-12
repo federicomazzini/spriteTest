@@ -16,7 +16,7 @@
 		06C667CD1D2D9B840084BA51 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 06C667CB1D2D9B840084BA51 /* LaunchScreen.storyboard */; };
 		06C667D81D2D9B840084BA51 /* spriteKitTestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C667D71D2D9B840084BA51 /* spriteKitTestTests.swift */; };
 		06C667E31D2D9B840084BA51 /* spriteKitTestUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C667E21D2D9B840084BA51 /* spriteKitTestUITests.swift */; };
-		06C667F11D2D9C840084BA51 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C667F01D2D9C840084BA51 /* GameScene.swift */; };
+		06FDFCAB1D351E2000127F01 /* Gradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06FDFCAA1D351E2000127F01 /* Gradient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,7 +52,7 @@
 		06C667DE1D2D9B840084BA51 /* spriteKitTestUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = spriteKitTestUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		06C667E21D2D9B840084BA51 /* spriteKitTestUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = spriteKitTestUITests.swift; sourceTree = "<group>"; };
 		06C667E41D2D9B840084BA51 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		06C667F01D2D9C840084BA51 /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		06FDFCAA1D351E2000127F01 /* Gradient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gradient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,8 +110,8 @@
 				06C667C91D2D9B840084BA51 /* Assets.xcassets */,
 				06C667CB1D2D9B840084BA51 /* LaunchScreen.storyboard */,
 				06C667CE1D2D9B840084BA51 /* Info.plist */,
-				06C667F01D2D9C840084BA51 /* GameScene.swift */,
 				06C628AE1D340E33000F9C15 /* NoiseGenerator.swift */,
+				06FDFCAA1D351E2000127F01 /* Gradient.swift */,
 			);
 			path = spriteKitTest;
 			sourceTree = "<group>";
@@ -266,8 +266,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				06FDFCAB1D351E2000127F01 /* Gradient.swift in Sources */,
 				06C628AF1D340E33000F9C15 /* NoiseGenerator.swift in Sources */,
-				06C667F11D2D9C840084BA51 /* GameScene.swift in Sources */,
 				06C667C51D2D9B840084BA51 /* GameViewController.swift in Sources */,
 				06C667C11D2D9B830084BA51 /* AppDelegate.swift in Sources */,
 			);
