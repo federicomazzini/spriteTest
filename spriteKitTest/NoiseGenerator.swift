@@ -6,7 +6,6 @@
 //  Copyright © 2016 Federico Mazzini. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 infix operator ** { }
