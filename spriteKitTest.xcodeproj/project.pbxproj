@@ -19,6 +19,7 @@
 		06FDFCB11D35905F00127F01 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06FDFCB01D35905F00127F01 /* GameScene.swift */; };
 		06FDFCB31D3590CB00127F01 /* Element.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06FDFCB21D3590CB00127F01 /* Element.swift */; };
 		06FDFCB51D35931C00127F01 /* Array2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06FDFCB41D35931C00127F01 /* Array2D.swift */; };
+		06FDFCB71D366B1100127F01 /* Level.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06FDFCB61D366B1100127F01 /* Level.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 		06FDFCB01D35905F00127F01 /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		06FDFCB21D3590CB00127F01 /* Element.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Element.swift; sourceTree = "<group>"; };
 		06FDFCB41D35931C00127F01 /* Array2D.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Array2D.swift; sourceTree = "<group>"; };
+		06FDFCB61D366B1100127F01 /* Level.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Level.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +120,7 @@
 				06FDFCB01D35905F00127F01 /* GameScene.swift */,
 				06FDFCB21D3590CB00127F01 /* Element.swift */,
 				06FDFCB41D35931C00127F01 /* Array2D.swift */,
+				06FDFCB61D366B1100127F01 /* Level.swift */,
 			);
 			path = spriteKitTest;
 			sourceTree = "<group>";
@@ -273,6 +276,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				06C628AF1D340E33000F9C15 /* NoiseGenerator.swift in Sources */,
+				06FDFCB71D366B1100127F01 /* Level.swift in Sources */,
 				06FDFCB51D35931C00127F01 /* Array2D.swift in Sources */,
 				06FDFCB31D3590CB00127F01 /* Element.swift in Sources */,
 				06C667C51D2D9B840084BA51 /* GameViewController.swift in Sources */,

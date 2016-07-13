@@ -45,11 +45,10 @@ class NoiseGenerator {
     
     func generateNoiseImage(size:CGSize) -> UIImage {
         
-        let width = Int(size.width / 6)
-        let height = Int(size.height / 6)
+        let width = Int(size.width)
+        let height = Int(size.height)
         
-        let whiteNoise : [[Double]] = NoiseGenerator.sharedInstance.generateWhiteNoise(width, height: height)
-        let perlinNoise : [[Double]] = NoiseGenerator.sharedInstance.GeneratePerlinNoise(whiteNoise, octaveCount: 8)
+        let perlinNoise : [[Double]] = NoiseGenerator.sharedInstance.GeneratePerlinNoise(width, height: height, octaveCount: 8)
         
         var pixelArray = [PixelData](count: width * height, repeatedValue: PixelData(a: 255, r:0, g: 0, b: 0))
         
@@ -141,10 +140,9 @@ class NoiseGenerator {
         return smoothNoise
     }
     
-    func GeneratePerlinNoise(baseNoise: [[Double]], octaveCount: Int) -> [[Double]] {
-    
-        let width  = baseNoise.count
-        let height = baseNoise[0].count
+    func GeneratePerlinNoise(width: Int, height: Int, octaveCount: Int) -> [[Double]] {
+        
+        let baseNoise : [[Double]] = NoiseGenerator.sharedInstance.generateWhiteNoise(width, height: height)
         
         var smoothNoise = [[[Double]]]() //an array of 2D arrays containing
         let persistance = 0.5
