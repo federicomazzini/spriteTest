@@ -32,11 +32,11 @@ class Element {
         self.sprite = SKSpriteNode(color: UIColor.lightGrayColor(), size: CGSize(width: 20.0, height: 20.0))
         
         switch elementType {
-            case 0...0.3:
+            case 0...0.4:
                 self.elementType = ElementType.Water
                 self.sprite.color = UIColor.blueColor()
                 break
-            case 0.3...0.4:
+            case 0.4...0.45:
                 self.elementType = ElementType.Sand
                 self.sprite.color = UIColor.yellowColor()
                 break

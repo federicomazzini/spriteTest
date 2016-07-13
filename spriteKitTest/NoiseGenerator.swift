@@ -145,7 +145,7 @@ class NoiseGenerator {
         let baseNoise : [[Double]] = NoiseGenerator.sharedInstance.generateWhiteNoise(width, height: height)
         
         var smoothNoise = [[[Double]]]() //an array of 2D arrays containing
-        let persistance = 0.5
+        let persistance = 0.8
         
         //generate smooth noise
         for index in 0...octaveCount - 1 {

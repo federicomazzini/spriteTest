@@ -25,7 +25,7 @@ class Level {
         
         var elementsArray = Array<Element>()
         
-        let perlinNoise : [[Double]] = NoiseGenerator.sharedInstance.GeneratePerlinNoise(NumRows, height: NumColumns, octaveCount: 2)
+        let perlinNoise : [[Double]] = NoiseGenerator.sharedInstance.GeneratePerlinNoise(NumRows, height: NumColumns, octaveCount: 8)
         
         for i in 0...(perlinNoise.count - 1) {
             for j in 0...(perlinNoise[0].count - 1) {
