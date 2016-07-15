@@ -14,6 +14,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
 
+    @IBOutlet weak var imageView: NSImageView!
+    @IBOutlet weak var imageView: NSImageView!
+    @IBOutlet weak var imageView: NSImageView!
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         return true

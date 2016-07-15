@@ -12,7 +12,7 @@ class GameViewController: UIViewController {
 
     @IBOutlet weak var imageView: UIImageView!
     
-    var scene: GameScene!
+    var scene: MobileGameScene!
     var level: Level!
     
     override func viewDidLoad() {
@@ -28,7 +28,7 @@ class GameViewController: UIViewController {
         skView.multipleTouchEnabled = false
         
         // Create and configure the scene.
-        scene = GameScene(size: skView.bounds.size)
+        scene = MobileGameScene(size: skView.bounds.size)
         scene.scaleMode = .AspectFill
         
         // Present the scene.

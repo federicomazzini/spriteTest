@@ -1,5 +1,5 @@
 //
-//  GameScene.swift
+//  SharedGameScene.swift
 //  spriteKitTest
 //
 //  Created by Federico Mazzini on 7/12/16.
@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class GameScene: SKScene {
+class SharedGameScene: SKScene {
     
     var level: Level!
     
@@ -64,11 +64,5 @@ class GameScene: SKScene {
         return CGPoint(
             x: CGFloat(column)*TileWidth + TileWidth/2,
             y: CGFloat(row)*TileHeight + TileHeight/2)
-    }
-    
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        let firstTouch = touches.first
-        let location = (firstTouch?.locationInNode(self))!
-        cam.position = location
     }
 }

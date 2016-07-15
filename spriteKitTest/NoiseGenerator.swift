@@ -6,7 +6,8 @@
 //  Copyright © 2016 Federico Mazzini. All rights reserved.
 //
 
-import UIKit
+import Foundation
+import AppKit
 
 infix operator ** { }
 func ** (radix: Int, power: Int) -> Int {
@@ -31,47 +32,93 @@ class NoiseGenerator {
         var b:UInt8
     }
     
-    func imageFromARGB32Bitmap(pixels:[PixelData], width:Int, height:Int)->UIImage {
-        let bitsPerComponent:Int = 8
-        let bitsPerPixel:Int = 32
-        
-        var data = pixels // Copy to mutable []
-        let providerRef = CGDataProviderCreateWithCFData(NSData(bytes: &data, length: data.count * sizeof(PixelData)))
-        
-        let cgim = CGImageCreate(width, height, bitsPerComponent, bitsPerPixel, width * Int(sizeof(PixelData)), rgbColorSpace,	bitmapInfo, providerRef, nil, true, CGColorRenderingIntent.RenderingIntentDefault)
-        
-        return UIImage(CGImage: cgim!);
-    }
-    
-    func generateNoiseImage(size:CGSize) -> UIImage {
-        
-        let width = Int(size.width)
-        let height = Int(size.height)
-        
-        let perlinNoise : [[Double]] = NoiseGenerator.sharedInstance.GeneratePerlinNoise(width, height: height, octaveCount: 8)
-        
-        var pixelArray = [PixelData](count: width * height, repeatedValue: PixelData(a: 255, r:0, g: 0, b: 0))
-        
-        for i in 0 ..< (height - 1) {
-            for j in 0 ..< (width - 1) {
-                var val = abs(Float(perlinNoise[j][i]))
-                
-                if val > 1 {
-                    val = 1
-                }
-                
-                let index = i * width + j
-                let u_I = UInt8(val * 255)
-                pixelArray[index].r = u_I
-                pixelArray[index].g = u_I
-                pixelArray[index].b = u_I
-            }
+    #if TARGET_OS_IPHONE
+        func imageFromARGB32Bitmap(pixels:[PixelData], width:Int, height:Int) -> UIImage {
+            let bitsPerComponent:Int = 8
+            let bitsPerPixel:Int = 32
+            
+            var data = pixels // Copy to mutable []
+            let providerRef = CGDataProviderCreateWithCFData(NSData(bytes: &data, length: data.count * sizeof(PixelData)))
+            
+            let cgim = CGImageCreate(width, height, bitsPerComponent, bitsPerPixel, width * Int(sizeof(PixelData)), rgbColorSpace,	bitmapInfo, providerRef, nil, true, CGColorRenderingIntent.RenderingIntentDefault)
+            
+            return UIImage(CGImage: cgim!);
         }
-        
-        let outputImage = imageFromARGB32Bitmap(pixelArray, width: width, height: height)
-        
-        return outputImage
-    }
+    #else
+        func imageFromARGB32Bitmap(pixels:[PixelData], width:Int, height:Int) -> NSImage {
+            let bitsPerComponent:Int = 8
+            let bitsPerPixel:Int = 32
+            
+            var data = pixels // Copy to mutable []
+            let providerRef = CGDataProviderCreateWithCFData(NSData(bytes: &data, length: data.count * sizeof(PixelData)))
+            
+            let cgim = CGImageCreate(width, height, bitsPerComponent, bitsPerPixel, width * Int(sizeof(PixelData)), rgbColorSpace,	bitmapInfo, providerRef, nil, true, CGColorRenderingIntent.RenderingIntentDefault)
+            
+            let size = CGSize(width: width, height: height)
+            
+            return NSImage(CGImage: cgim!, size: size)
+        }
+    #endif
+    
+    #if TARGET_OS_IPHONE
+        func generateNoiseImage(size:CGSize) -> UIImage {
+            
+            let width = Int(size.width)
+            let height = Int(size.height)
+            
+            let perlinNoise : [[Double]] = NoiseGenerator.sharedInstance.GeneratePerlinNoise(width, height: height, octaveCount: 8)
+            
+            var pixelArray = [PixelData](count: width * height, repeatedValue: PixelData(a: 255, r:0, g: 0, b: 0))
+            
+            for i in 0 ..< (height - 1) {
+                for j in 0 ..< (width - 1) {
+                    var val = abs(Float(perlinNoise[j][i]))
+                    
+                    if val > 1 {
+                        val = 1
+                    }
+                    
+                    let index = i * width + j
+                    let u_I = UInt8(val * 255)
+                    pixelArray[index].r = u_I
+                    pixelArray[index].g = u_I
+                    pixelArray[index].b = u_I
+                }
+            }
+            let outputImage = imageFromARGB32Bitmap(pixelArray, width: width, height: height)
+            
+            return outputImage
+        }
+    #else
+        func generateNoiseImage(size:CGSize) -> NSImage {
+            
+            let width = Int(size.width)
+            let height = Int(size.height)
+            
+            let perlinNoise : [[Double]] = NoiseGenerator.sharedInstance.GeneratePerlinNoise(width, height: height, octaveCount: 8)
+            
+            var pixelArray = [PixelData](count: width * height, repeatedValue: PixelData(a: 255, r:0, g: 0, b: 0))
+            
+            for i in 0 ..< (height - 1) {
+                for j in 0 ..< (width - 1) {
+                    var val = abs(Float(perlinNoise[j][i]))
+                    
+                    if val > 1 {
+                        val = 1
+                    }
+                    
+                    let index = i * width + j
+                    let u_I = UInt8(val * 255)
+                    pixelArray[index].r = u_I
+                    pixelArray[index].g = u_I
+                    pixelArray[index].b = u_I
+                }
+            }
+            let outputImage = imageFromARGB32Bitmap(pixelArray, width: width, height: height)
+            
+            return outputImage
+        }
+    #endif
     
     //MARK: Noise generation
     

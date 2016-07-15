@@ -29,32 +29,60 @@ class Element {
     init(column: Int, row: Int, elementType: Double) {
         self.column = column
         self.row = row
-        self.sprite = SKSpriteNode(color: UIColor.lightGrayColor(), size: CGSize(width: 20.0, height: 20.0))
+        #if TARGET_OS_IPHONE
+            self.sprite = SKSpriteNode(color: UIColor.lightGrayColor(), size: CGSize(width: 20.0, height: 20.0))
+        #else
+            self.sprite = SKSpriteNode(color: NSColor.lightGrayColor(), size: CGSize(width: 20.0, height: 20.0))
+        #endif
         
         switch elementType {
             case 0...0.4:
                 self.elementType = ElementType.Water
-                self.sprite.color = UIColor.blueColor()
+                #if TARGET_OS_IPHONE
+                    self.sprite.color = UIColor.blueColor()
+                #else
+                    self.sprite.color = NSColor.blueColor()
+                #endif
                 break
             case 0.4...0.45:
                 self.elementType = ElementType.Sand
-                self.sprite.color = UIColor.yellowColor()
+                #if TARGET_OS_IPHONE
+                    self.sprite.color = UIColor.yellowColor()
+                #else
+                    self.sprite.color = NSColor.yellowColor()
+                #endif
                 break
             case 0.4...0.8:
                 self.elementType = ElementType.Grass
-                self.sprite.color = UIColor.greenColor()
+                #if TARGET_OS_IPHONE
+                    self.sprite.color = UIColor.greenColor()
+                #else
+                    self.sprite.color = NSColor.greenColor()
+                #endif
                 break
             case 0.8...9:
                 self.elementType = ElementType.Forest
-                self.sprite.color = UIColor.redColor()
+                #if TARGET_OS_IPHONE
+                    self.sprite.color = UIColor.redColor()
+                #else
+                    self.sprite.color = NSColor.redColor()
+                #endif
                 break
             case 0.9...1:
                 self.elementType = ElementType.Mountain
-                self.sprite.color = UIColor.brownColor()
+                #if TARGET_OS_IPHONE
+                    self.sprite.color = UIColor.brownColor()
+                #else
+                    self.sprite.color = NSColor.brownColor()
+                #endif
                 break
             default:
                 self.elementType = ElementType.Grass
-                self.sprite.color = UIColor.lightGrayColor()
+                #if TARGET_OS_IPHONE
+                    self.sprite.color = UIColor.lightGrayColor()
+                #else
+                    self.sprite.color = NSColor.lightGrayColor()
+                #endif
                 break
         }
     }
